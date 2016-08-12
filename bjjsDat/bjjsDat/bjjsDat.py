@@ -23,8 +23,10 @@ for table in tables:
                     for row in rows:
                         td = row.findAll(lambda tag: tag.name=='td')
                         for t in td:
-                            print (t.renderContents().decode('utf-8').strip()\
-                            .encode('cp936',errors='ignore').decode('gbk'))
+                            spanElem = t.select('span')
+                            if(spanElem):
+                                print (spanElem[0])
+                            else:                            print (t.renderContents().decode('utf-8').strip())
 #print(tables)   
 
     
