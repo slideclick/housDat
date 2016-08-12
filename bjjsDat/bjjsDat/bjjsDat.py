@@ -16,9 +16,15 @@ for table in tables:
     for row in rows:
         td = row.findAll(lambda tag: tag.name=='td')
         for t in td:
-            innerTable = t.find_all('table')
-            if innerTable:
-                print (innerTable)
+            innerTables = t.find_all('table')
+            if innerTables:
+                for innerTable in innerTables:
+                    rows = innerTable.findAll(lambda tag: tag.name=='tr')
+                    for row in rows:
+                        td = row.findAll(lambda tag: tag.name=='td')
+                        for t in td:
+                            print (t.renderContents().decode('utf-8').strip()\
+                            .encode('cp936',errors='ignore').decode('gbk'))
 #print(tables)   
 
     
