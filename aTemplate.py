@@ -57,6 +57,22 @@ def log(message):
 def _test(fname='null'):
     print('{0} calledBy {1}'.format(inspect.stack()[0][3],inspect.stack()[1][3]))   
 ###############################
+def get_links(url):
+    import requests
+    from bs4 import BeautifulSoup as soup
+    result = requests.get(url)
+    page = result.text
+    doc = soup(page)
+    links = [element.get('href') for element in doc.find_all('a')] 
+    return links
+    
+def getHref(fname='null'):
+    for url in fname:
+        print('Links in', url)
+        for num, link in enumerate(get_links(url), start=1):
+            print(num, link)
+        print()    
+    
     
 if __name__ == "__main__":
     regExp=r'\s(\w)+\x20(\w{5})'
@@ -99,7 +115,7 @@ if __name__ == "__main__":
         for ln in f.readlines():
             pass
             
-    if len(sys.argv) > 1 :_test(sys.argv[1])
+    if len(sys.argv) > 1 :getHref(sys.argv[1:])#not use [1]
        
     import doctest
     doctest.testmod() 
